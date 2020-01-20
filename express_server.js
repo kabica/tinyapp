@@ -26,11 +26,6 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
-let keys = Object.keys(urlDatabase);
-keys.forEach(x => {
-  console.log(typeof x);
-})
-
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
@@ -63,12 +58,10 @@ app.get("/u/:shortURL", (req, res) => {
 // ============================== POSTS ================================= //
 
 app.post("/urls", (req, res) => {
-
   const longURL = req.body.longURL;
   const shortURL = generateRandomString();
+
   urlDatabase[shortURL] = longURL;
-
-
   res.redirect(`/urls/${shortURL}`);                
 });
 
