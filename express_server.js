@@ -19,7 +19,7 @@ function generateRandomString() {
   }
   return randomstring;
 }
-// ================================================================ //
+// ============================== GET REQUESTS ================================= //
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -55,7 +55,7 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
-// ============================== POSTS ================================= //
+// ============================== POST REQUESTS ================================= //
 
 app.post("/urls", (req, res) => {
   const longURL = req.body.longURL;
@@ -71,6 +71,8 @@ app.post("/urls", (req, res) => {
 
 
 
+
+// ================================== LISTEN ===================================== //
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
