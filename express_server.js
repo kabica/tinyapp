@@ -10,6 +10,27 @@ const cookieParser = require('cookie-parser')
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
+// ============================== GLOBALS ================================= //
+
+const urlDatabase = {
+  "b2xVn2": "http://www.lighthouselabs.ca",
+  "9sm5xK": "http://www.google.com"
+};
+
+const users = { 
+  "userRandomID": {
+    id: "userRandomID", 
+    email: "user@example.com", 
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID", 
+    email: "user2@example.com", 
+    password: "dishwasher-funk"
+  }
+}
+
+// ============================== FUNCTIONS ================================= //
 
 function generateRandomString() {
   let chars = "123456789abcdefghiklmnopqrstuvwxyz";
@@ -35,11 +56,6 @@ const getKey = function(obj , value) {
 
 
 // ============================== GET REQUESTS ================================= //
-
-const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
 
 app.get("/urls/new", (req, res) => {
   let templateVars = { username: req.cookies['username'] };
@@ -69,6 +85,11 @@ app.get("/u/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
   const longURL = urlDatabase[shortURL];
   res.redirect(longURL);
+});
+
+app.get("/register", (req, res) => {
+
+  res.render("urls_user");
 });
 
 // ============================== POST REQUESTS ================================= //
@@ -114,14 +135,19 @@ app.post("/logout", (req, res) => {
   res.status(200).redirect('/urls');               
 });
 
+app.post("/register", (req, res) => {
+  let newUser = {};
+  userID = generateRandomString();
 
-//res.status(400).send('you are already logged in');
-// return Object.keys(object).find(key => object[key] === value);
+  newUser['id'] = userID;
+  newUser['email'] = req.body.emailAddress;
+  newUser['password'] = req.body.password;
 
+  users[userID] = newUser;
+  res.cookie("user_id" , userID);
 
-
-
-
+  res.redirect('/urls')             
+});
 
 
 
