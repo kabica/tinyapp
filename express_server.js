@@ -51,8 +51,20 @@ const getKey = function(obj , value) {
       return result;
     }
   }
-
+  return 0;
 };
+
+const checkEmail = function(object , email) {
+  result = 1;
+  Object.keys(object).forEach(val => {
+    if(object[val]['email'] === email) {
+      result = 0;
+      return result;
+    }
+  });
+
+  return result;
+}
 
 
 // ============================== GET REQUESTS ================================= //
@@ -136,18 +148,28 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  let newUser = {};
-  userID = generateRandomString();
+	const test = req.body.emailAddress;
 
-  newUser['id'] = userID;
-  newUser['email'] = req.body.emailAddress;
-  newUser['password'] = req.body.password;
+	// Check if valid email and password input
+  	if(test.length !== 0 && checkEmail(users , test)) {
+  		let newUser = {};
+  		userID = generateRandomString();
 
-  users[userID] = newUser;
-  res.cookie("user_id" , userID);
+  		newUser['id'] = userID;
+  		newUser['email'] = req.body.emailAddress;
+  		newUser['password'] = req.body.password;
 
-  res.redirect('/urls')             
+  		users[userID] = newUser;
+  		res.cookie("user_id" , userID);
+  		res.redirect('/urls')
+  	}
+  	// Email or password is invalid
+  	else {
+  		res.status(400).send('Invalid email / password'); 
+  	}
+ 
 });
+
 
 
 
