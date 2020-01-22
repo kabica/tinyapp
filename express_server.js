@@ -19,6 +19,19 @@ function generateRandomString() {
   }
   return randomstring;
 }
+
+const getKey = function(obj , value) {
+  const result = '';
+  for(const x in obj) {
+    if(obj[x] === value) {
+      result = x;
+      return result;
+    }
+  }
+
+};
+
+
 // ============================== GET REQUESTS ================================= //
 
 const urlDatabase = {
@@ -58,12 +71,11 @@ app.get("/u/:shortURL", (req, res) => {
 // ============================== POST REQUESTS ================================= //
 
 app.post("/urls", (req, res) => {
-  console.log('HERE!');
   const longURL = req.body.longURL;
   const shortURL = generateRandomString();
-
   urlDatabase[shortURL] = longURL;
-  res.redirect(`/urls/${shortURL}`);                
+  // res.redirect(`/urls/${shortURL}`);    
+  res.redirect('/urls');            
 });
 
 
@@ -73,6 +85,21 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   res.redirect('/urls');                
 });
 
+app.post("/urls/:shortURL", (req, res) => {
+  console.log('hi');
+  const shortURL = req.params.shortURL;
+  res.redirect(`/urls/${shortURL}`);                
+});
+
+app.post("/urls/:shortURL/edit", (req, res) => {
+  const longURL = req.body.longURL;
+  const shortURL = req.params.shortURL;
+
+  delete urlDatabase[shortURL];
+  urlDatabase[shortURL] = longURL;
+
+  res.redirect('/urls');                
+});
 
 
 
