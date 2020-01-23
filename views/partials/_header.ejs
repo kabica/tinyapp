@@ -13,28 +13,56 @@
       </div>
     </div>
 
+    
+    <div name="myLogin" style="position: absolute; right: 200px;">
+      <% if(typeof user !== 'object') {%>
+      <a href="/login">Login</a>
+      <% } %>
+    </div>
+     
 
-    <% if(typeof username !== 'string'){ %>
-    <div name="myLogin" style="position: absolute; right: 10px;">
-        <div class="form-group mb-2">
-          <form class="form-inline" action="/login" method="POST">
-          
-          <input class="form-control" type="text" name="username" placeholder="username" id="username" style="width: 200px; height : 37px; margin: 1em">
-          <button type="submit" class="btn btn-outline-secondary">Login</button>
-          </form>
-        </div>
-    </div>  
-    <% } %>
-    <% if(typeof username === 'string') {%>
+    <div name="myLogin" style="position: absolute; right: 110px;">
+      <% if(typeof user !== 'object') {%>
+      <a href="/register">Register</a>
+      <% } %>
+    </div>
+
+    
+    <form action="/logout" method="POST">
+    <div name="myLogin" style="position: relative; right: 0px;">
+      <% if(typeof user === 'object'){ %>
+      <button type="submit" class="btn btn-primary">Logout</button>
+      <% } %>
+    </div>
+    </form>
+
+
+    <div name="myLogin" style="position: absolute; right: 100px; top: 16px;">
+      <% if(typeof user === 'object'){ %>
+       <label for="username">Logged In As: <%= user['email'] %>!</label>
+      <% } %>
+    </div>
+
+
+
+
+
+
+   
+
+
+<!--
+    <% if(typeof user === 'object') {%>
     <div name="myLogin" style="position: absolute; right: 10px;">
         <div class="form-group mb-2">
           <form class="form-inline" action="/logout" method="POST">
-          <label for="username">Logged In As: <%= username %>!</label>
+          <label for="username">Logged In As: <%= user['email'] %>!</label>
           <button type="submit" style="margin:1em" class="btn btn-outline-secondary">Logout</button>
           </form>
         </div>
     </div> 
     <% } %>
+  -->
 
    
 
