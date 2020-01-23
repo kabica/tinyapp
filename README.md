@@ -26,11 +26,11 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ### Express Setup
 
 - Initalize NPM  
-	**npm init -y** *(-y will accept the default values, if you'd like)*
+	-**npm init -y** -*(-y will accept the default values, if you'd like)*
 - Install Express
-	**npm install express**
+	-**npm install express**
 - Start your server!
-	**node express_server.js**
+	-**node express_server.js**
 
 ### EJS Setup
 
