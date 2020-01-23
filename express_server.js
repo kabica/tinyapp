@@ -5,6 +5,7 @@ const app = express();
 const PORT = 8080; // default port 8080
 app.set("view engine", "ejs");
 
+const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
 app.use(bodyParser.urlencoded({extended: true}));
@@ -215,6 +216,8 @@ app.post("/logout", (req, res) => {
 });
 app.post("/register", (req, res) => {
 	const test = req.body.emailAddress;
+	const password = req.body['password'];
+	const hashedPassword = bcrypt.hashSync(password, 10);
 
 	// Check if valid email and password input
   	if(test.length !== 0 && checkEmail(users , test)) {
@@ -229,6 +232,7 @@ app.post("/register", (req, res) => {
   		res.cookie("user_id" , userID);
   		res.redirect('/urls')
   	}
+  	
 
   	// Email or password is invalid
   	else {
