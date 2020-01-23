@@ -95,9 +95,15 @@ const getEmail = function(object , email) {
 
 app.get("/urls/new", (req, res) => {
   const userID = req.cookies['user_id'];
-
-  // const templateVars = { username: req.cookies['username'] };
-  res.render("urls_new" , templateVars);
+  if(userID){
+  	const user = users[userID];
+  	const templateVars = { user };
+  	res.render("urls_new" , templateVars);
+  } 
+  else {
+  	res.redirect('/urls');
+  }
+ 
 });
 
 
