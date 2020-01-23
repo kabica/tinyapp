@@ -98,8 +98,7 @@ const urlsForUser = function(id) {
 	})
 	return result;
 };
-
-const getURLKey = function (object , id) {
+const getURLKey = function(object , id) {
 	let urlKey = '';
 	Object.keys(urlDatabase).forEach(key => {
 		if(urlDatabase[key]['userID'] === id) {
@@ -109,6 +108,13 @@ const getURLKey = function (object , id) {
 	})
 	return urlKey;
 }
+const getPW= function(email) {
+	for(const key of Object.keys(users)) {
+		if(users[key]['email'] === email) {
+			return result = users[key]['password'];
+		}
+	}
+};
 
 // ============================== GET REQUESTS ================================= //
 
@@ -200,15 +206,17 @@ app.post("/urls/:shortURL/edit", (req, res) => {
 app.post("/login", (req, res) => {  
   const pw = req.body['password'];
   const email = req.body['emailAddress'];
-
-  let userID = getEmail(users , email);
-  if(!checkEmail(users , email) && checkPW(users , pw)) {
+  const pwStored = getPW(email);
+  const hashedPassword = bcrypt.hashSync(pw, 10);
+  
+  let userID = generateRandomString();
+  if(!checkEmail(users , email) && bcrypt.compareSync(pw, hashedPassword)) {
   	res.cookie('user_id' , userID);
   	res.redirect('/urls');
   }
   else {
   	res.status(400).send('Invalid email / password'); 
-  	}                
+  	}        
 });
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');
@@ -226,9 +234,11 @@ app.post("/register", (req, res) => {
 
   		newUser['id'] = userID;
   		newUser['email'] = req.body.emailAddress;
-  		newUser['password'] = req.body.password;
+  		newUser['password'] = hashedPassword;
+  		console.log(newUser['password'])
 
   		users[userID] = newUser;
+  		console.log(users);
   		res.cookie("user_id" , userID);
   		res.redirect('/urls')
   	}
