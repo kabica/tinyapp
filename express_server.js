@@ -55,10 +55,34 @@ const getKey = function(obj , value) {
 };
 
 const checkEmail = function(object , email) {
-  result = 1;
+  let result = 1;
   Object.keys(object).forEach(val => {
     if(object[val]['email'] === email) {
       result = 0;
+      return result;
+    }
+  });
+
+  return result;
+}
+
+const checkPW = function(object , pw) {
+  let result = 0;
+  Object.keys(object).forEach(val => {
+    if(object[val]['password'] === pw) {
+      result = 1;
+      return result;
+    }
+  });
+
+  return result;
+}
+
+const getEmail = function(object , email) {
+  let result = '';
+  Object.keys(object).forEach(val => {
+    if(object[val]['email'] === email) {
+      result = val;
       return result;
     }
   });
@@ -70,28 +94,44 @@ const checkEmail = function(object , email) {
 // ============================== GET REQUESTS ================================= //
 
 app.get("/urls/new", (req, res) => {
-  let templateVars = { username: req.cookies['username'] };
+  const userID = req.cookies['user_id'];
+
+  // const templateVars = { username: req.cookies['username'] };
   res.render("urls_new" , templateVars);
 });
 
+
+
 app.get("/", (req, res) => {
   res.send("Hello!");
-  sds;
 });
 
+
+
 app.get("/urls", (req, res) => {
-  let templateVars = { username: req.cookies['username'] , urls: urlDatabase };
+  const userID = req.cookies['user_id'];
+  const user = users[userID];
+  const templateVars = { user: user, urls: urlDatabase };
+ 
   res.render("urls_index", templateVars);
 });
+
+
 
 app.get("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
   const longURL = urlDatabase[shortURL];
 
-  const templateVars = { username: req.cookies['username'] , shortURL , longURL };
+  const userID = req.cookies['user_id'];
+  const user = users[userID];
+
+  const templateVars = { user: user , shortURL , longURL };
+  // const templateVars = { username: req.cookies['username'] , shortURL , longURL };
 
   res.render("urls_show", templateVars);
 });
+
+
 
 app.get("/u/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
@@ -99,9 +139,18 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
+
+
 app.get("/register", (req, res) => {
 
   res.render("urls_user");
+});
+
+
+
+app.get("/login", (req, res) => {
+
+  res.render("urls_login");
 });
 
 // ============================== POST REQUESTS ================================= //
@@ -137,13 +186,26 @@ app.post("/urls/:shortURL/edit", (req, res) => {
   res.redirect('/urls');                
 });
 
-app.post("/login", (req, res) => {
-  res.cookie("username" , req.body.username);
-  res.redirect('/urls');                
+app.post("/login", (req, res) => {  
+  const pw = req.body['password'];
+  const email = req.body['emailAddress'];
+
+  let userID = getEmail(users , email);
+  if(!checkEmail(users , email) && checkPW(users , pw)) {
+  	res.cookie('user_id' , userID);
+  	res.redirect('/urls');
+  }
+  else {
+  	res.status(400).send('Invalid email / password'); 
+  	}                
 });
 
+
+
+
+
 app.post("/logout", (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.status(200).redirect('/urls');               
 });
 
@@ -163,6 +225,7 @@ app.post("/register", (req, res) => {
   		res.cookie("user_id" , userID);
   		res.redirect('/urls')
   	}
+
   	// Email or password is invalid
   	else {
   		res.status(400).send('Invalid email / password'); 
