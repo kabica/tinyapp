@@ -13,8 +13,8 @@ app.use(cookieParser());
 // ============================== GLOBALS ================================= //
 
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  alex: { longURL: "https://www.tsn.ca", userID: "userRandomID" },
+  bica: { longURL: "https://www.google.ca", userID: "userRandomID" }
 };
 
 const users = { 
@@ -41,8 +41,7 @@ function generateRandomString() {
 		randomstring += chars.substring(rnum,rnum+1);
   }
   return randomstring;
-}
-
+};
 const getKey = function(obj , value) {
   const result = '';
   for(const x in obj) {
@@ -53,7 +52,6 @@ const getKey = function(obj , value) {
   }
   return 0;
 };
-
 const checkEmail = function(object , email) {
   let result = 1;
   Object.keys(object).forEach(val => {
@@ -64,8 +62,7 @@ const checkEmail = function(object , email) {
   });
 
   return result;
-}
-
+};
 const checkPW = function(object , pw) {
   let result = 0;
   Object.keys(object).forEach(val => {
@@ -76,8 +73,7 @@ const checkPW = function(object , pw) {
   });
 
   return result;
-}
-
+};
 const getEmail = function(object , email) {
   let result = '';
   Object.keys(object).forEach(val => {
@@ -88,8 +84,19 @@ const getEmail = function(object , email) {
   });
 
   return result;
-}
-
+};
+const urlsForUser = function(id) {
+	let result = [];
+	Object.keys(urlDatabase).forEach(key => {
+		if(urlDatabase[key]['userID'] === id) {
+			let urls = {}
+			urls['shortURL'] = key;
+			urls['longURL'] = urlDatabase[key]['longURL'];
+			result.push(urls);
+		}
+	})
+	return result;
+};
 
 // ============================== GET REQUESTS ================================= //
 
@@ -117,7 +124,8 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   const userID = req.cookies['user_id'];
   const user = users[userID];
-  const templateVars = { user: user, urls: urlDatabase };
+  const myURL = urlsForUser(userID);
+  const templateVars = { user: user, urls: myURL };
  
   res.render("urls_index", templateVars);
 });
