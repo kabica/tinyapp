@@ -26,41 +26,41 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ## Express Setup
 
 - Initalize NPM  
-	- **npm init -y** *(-y to accept default)*
+	- **`npm init -y`** *(-y to accept default)*
 - Install Express
-	- **npm install express**
+	- **`npm install express`**
 - Start your server!
-	- **node express_server.js**
+	- **`node express_server.js`**
 
 ## EJS Setup
 
 - Install EJS as dependency 
-	- **npm install ejs**
+	- **`npm install ejs`**
 - Set EJS as view engine
-	- **app.set("view engine", "ejs");**
+	- **`app.set("view engine", "ejs");`**
 
 ## Nodemon Setup ###*(optional)*
 
-- Install Nodemon & save as dependency 
-	- **npm install --save-dev nodemon**
+- Install *Nodemon* 
+	- **`npm install --save-dev nodemon`**
 - Edit scripts to allow for quick start-up
-	- **"start": "./node_modules/.bin/nodemon -L express_server.js"**
+	- **`"start": "./node_modules/.bin/nodemon -L express_server.js"`**
 - Start your server!
-	- **npm start**
+	- **`npm start`**
 
 ## BCRYPT Setup
 
 - Install *bcrypt* package
-	- **npm install -E bcrypt@2.0.0** *(check version compatability!)*
+	- **`npm install -E bcrypt@2.0.0`** *(check version compatability!)*
 - Require *bcrypt* package
-	- **const bcrypt = require('bcrypt');**
+	- **`const bcrypt = require('bcrypt');`**
 
 ## Cookie-Session Middleware
 
 - Install *cookie-session*
-	- **npm install cookie-session**
+	- **`npm install cookie-session`**
 - Require *cookie-session*
-	- **const cookieSession = require('cookie-session');**
+	- **`const cookieSession = require('cookie-session');`**
 
 
 
