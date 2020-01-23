@@ -39,7 +39,7 @@ TinyApp is a full stack web application built with Node and Express that allows 
 - Set EJS as view engine
 	- **`app.set("view engine", "ejs");`**
 
-## Nodemon Setup ###*(optional)*
+## Nodemon Setup _###*(optional)*_
 
 - Install *Nodemon* 
 	- **`npm install --save-dev nodemon`**
