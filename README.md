@@ -4,8 +4,8 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-!["screenshot description"](#)
-!["screenshot description"](#)
+!["Login page / credentials"](#)
+!["Index of user-specific URLs"](#)
 
 ## Dependencies
 
@@ -39,7 +39,7 @@ TinyApp is a full stack web application built with Node and Express that allows 
 - Set EJS as view engine
 	- **`app.set("view engine", "ejs");`**
 
-## Nodemon Setup _###*(optional)*_
+## Nodemon Setup _*(optional)*_
 
 - Install *Nodemon* 
 	- **`npm install --save-dev nodemon`**
@@ -55,7 +55,7 @@ TinyApp is a full stack web application built with Node and Express that allows 
 - Require *bcrypt* package
 	- **`const bcrypt = require('bcrypt');`**
 
-## Cookie-Session Middleware
+## Cookie-Session Setup
 
 - Install *cookie-session*
 	- **`npm install cookie-session`**
