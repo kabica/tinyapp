@@ -15,7 +15,7 @@
 
     
     <div name="myLogin" style="position: absolute; right: 200px;">
-      <% if(typeof user !== 'object') {%>
+      <% if(typeof user === 'undefined') {%>
       <a href="/login">Login</a>
       <% } %>
     </div>
