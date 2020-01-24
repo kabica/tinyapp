@@ -2,7 +2,7 @@
 const { secretKeys  } = require('./data');
 const express = require("express");
 const app = express();
-const PORT = 8080; 
+const PORT = 8080;
 
 
 app.set("view engine", "ejs");
@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
   name: 'session',
   keys: secretKeys, // Nice try :)
-  maxAge: 24 * 60 * 60 * 1000 
+  maxAge: 24 * 60 * 60 * 1000
 }));
 // ================================= GLOBALS =================================== //
 
@@ -22,8 +22,7 @@ const {
   getUserByEmail,
   generateRandomString,
   checkEmail,
-  checkPW,
-  getPW, 
+  getPW,
   urlsForUser
 } = require('./helper');
 
@@ -158,14 +157,14 @@ app.post("/register", (req, res) => {
 
   if (test.length !== 0 && checkEmail(users, test)) {
     let newUser = {};
-    userID = generateRandomString();
+    const userID = generateRandomString();
 
     const userEmail = req.body.emailAddress;
     newUser = { 'id': userID , 'email': userEmail , 'password' : hashedPassword };
 
     users[userID] = newUser;
     req.session.user_id = userID;
-    res.redirect('/urls')
+    res.redirect('/urls');
   } else {
     res.status(400).send('Invalid email / password');
   }
