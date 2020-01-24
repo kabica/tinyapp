@@ -4,7 +4,7 @@ const urlDatabase = {
     longURL: "https://www.tsn.ca",
     userID: "userRandomID"
   },
-  userRandomID: {
+  userRandomID2: {
     longURL: "https://www.google.ca",
     userID: "userRandomID"
   }
