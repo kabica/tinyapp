@@ -63,4 +63,5 @@ const urlsForUser = function(urlDatabase , id) {
   });
   return result;
 };
+
 module.exports = { getUserByEmail , generateRandomString , checkEmail , checkPW , getPW , urlsForUser};

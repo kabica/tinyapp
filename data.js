@@ -24,5 +24,4 @@ const users = {
 };
 
 const secretKeys = ['secret', 'terces'];
-
 module.exports = { urlDatabase , users , secretKeys };
