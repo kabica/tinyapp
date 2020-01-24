@@ -4,8 +4,10 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-!["Login page / credentials"](#)
-!["Index of user-specific URLs"](#)
+
+!["Login!"](https://raw.githubusercontent.com/kabica/tinyapp/a8b198b7a75ba0d6bdb22b4ab9e047992cf93880/screenshots/Screen%20Shot%202020-01-23%20at%205.06.52%20PM.png)
+!["Index of user-specific URLs"](https://raw.githubusercontent.com/kabica/tinyapp/a8b198b7a75ba0d6bdb22b4ab9e047992cf93880/screenshots/Screen%20Shot%202020-01-23%20at%202.40.56%20PM.png)
+!["Register! It's awesome!"](https://raw.githubusercontent.com/kabica/tinyapp/a8b198b7a75ba0d6bdb22b4ab9e047992cf93880/screenshots/Screen%20Shot%202020-01-23%20at%205.07.41%20PM.png)
 
 ## Dependencies
 
