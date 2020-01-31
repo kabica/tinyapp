@@ -90,7 +90,12 @@ app.get("/u/:shortURL", (req, res) => {
 // ============================== POST REQUESTS ================================= //
 
 app.post("/urls", (req, res) => {
-  const longURL = req.body.longURL;
+  let longURL = req.body.longURL;
+  if(longURL.substring(0,3) !== 'http') {
+    let fullURL = 'http://';
+    fullURL += longURL;
+    longURL = fullURL;
+  }
   const userID = req.session.user_id;
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = {longURL: longURL , userID: userID};
