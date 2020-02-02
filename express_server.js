@@ -47,6 +47,7 @@ app.get("/urls/new", (req, res) => {
   const userID = req.session.user_id;
 
   if (userID) {
+    console.log(userID)
     const user = users[userID];
     const templateVars = { user };
     res.render("urls_new", templateVars);
@@ -64,7 +65,12 @@ app.get("/urls", (req, res) => {
     user: user,
     urls: myURL
   };
-  res.render("urls_index", templateVars);
+  // If user is not logged in, redirect to login page 
+  if(!userID) {
+    res.redirect('/login');
+  } else {
+    res.render("urls_index", templateVars);
+  }
 });
 
 
@@ -74,9 +80,15 @@ app.get("/urls/:shortURL", (req, res) => {
   const userID = req.session.user_id;
   const user = users[userID];
 
-  const templateVars = { user: user, shortURL, longURL };
-  res.render("urls_show", templateVars);
-});
+  let templateVars = { user: user, shortURL, longURL };
+  if(userID) {
+    res.render("urls_show", templateVars);
+  } else {
+    // TYPE 0: user not logged in    TYPE 1: invalid username or password
+    templateVars = {type: 0, error: 'You must be logged in to view this content!'};
+    res.render('urls_error', templateVars);
+  }
+  });
 
 
 app.get("/u/:shortURL", (req, res) => {
@@ -91,10 +103,8 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   let longURL = req.body.longURL;
-  if(longURL.substring(0,3) !== 'http') {
-    let fullURL = 'http://';
-    fullURL += longURL;
-    longURL = fullURL;
+  if(longURL.substring(0,7) !== 'http://') { // ADDRESSES: Cannot read property 'longURL' of undefined.
+    longURL = 'http://' + longURL;
   }
   const userID = req.session.user_id;
   const shortURL = generateRandomString();
@@ -123,9 +133,11 @@ app.post("/urls/:shortURL", (req, res) => {
 
 app.post("/urls/:shortURL/edit", (req, res) => {
   const shortURL = req.params['shortURL'];
-  const longURL = req.body['longURL'];
+  let longURL = req.body['longURL'];
   const userID = req.session.user_id;
-
+  if(longURL.substring(0,7) !== 'http://') {
+    longURL = 'http://' + longURL;
+  }
   if (urlDatabase[shortURL]['userID'] === userID) {
     urlDatabase[shortURL]['longURL'] = longURL;
   }
@@ -143,8 +155,9 @@ app.post("/login", (req, res) => {
     req.session.user_id = userID;
     res.redirect('/urls');
   } else {
-    // res.status(400).send('Invalid email / password');
-    res.status(400).redirect('/urls');
+    // TYPE 0: issue with valid-user credentials   TYPE 1: issue with non-valid-user credentials
+    templateVars = {type: 0, error: 'Invalid username or password'};
+    res.render('urls_error', templateVars);
   }
 });
 
@@ -171,7 +184,9 @@ app.post("/register", (req, res) => {
     req.session.user_id = userID;
     res.redirect('/urls');
   } else {
-    res.status(400).send('Invalid email / password');
+    // TYPE 0: issue with valid-user credentials   TYPE 1: issue with non-valid-user credentials
+    templateVars = {type: 1, error: 'Username is already in use'};
+    res.render('urls_error', templateVars);
   }
 });
 

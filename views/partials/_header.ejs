@@ -22,7 +22,7 @@
      
 
     <div name="myLogin" style="position: absolute; right: 20px;">
-      <% if(typeof user !== 'object') {%>
+      <% if(typeof user === 'undefined') {%>
       <a href="/register">Register</a>
       <% } %>
     </div>
@@ -38,7 +38,7 @@
 
 
     <div name="myLogin" style="position: absolute; right: 100px; top: 16px;">
-      <% if(typeof user === 'object'){ %>
+      <% if(typeof user !== 'undefined'){ %>
        <label for="username">Logged In As: <%= user['email'] %>!</label>
       <% } %>
     </div>
