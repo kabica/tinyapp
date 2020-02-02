@@ -42,7 +42,6 @@ app.get("/login", (req, res) => {
   res.render("urls_login");
 });
 
-
 app.get("/urls/new", (req, res) => {
   const userID = req.session.user_id;
 
@@ -55,7 +54,6 @@ app.get("/urls/new", (req, res) => {
     res.redirect('/urls');
   }
 });
-
 
 app.get("/urls", (req, res) => {
   const userID = req.session.user_id;
@@ -73,7 +71,6 @@ app.get("/urls", (req, res) => {
   }
 });
 
-
 app.get("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
   const longURL = urlDatabase[shortURL]['longURL'];
@@ -89,7 +86,6 @@ app.get("/urls/:shortURL", (req, res) => {
     res.render('urls_error', templateVars);
   }
   });
-
 
 app.get("/u/:shortURL", (req, res) => {
   const shortURL = req.params['shortURL'];
@@ -112,7 +108,6 @@ app.post("/urls", (req, res) => {
   res.redirect('/urls');
 });
 
-
 app.post("/urls/:shortURL/delete", (req, res) => {
   const userID = req.session.user_id;
   const shortURL = req.params['shortURL'];
@@ -124,12 +119,10 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   }
 });
 
-
 app.post("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
   res.redirect(`/urls/${shortURL}`);
 });
-
 
 app.post("/urls/:shortURL/edit", (req, res) => {
   const shortURL = req.params['shortURL'];
@@ -143,7 +136,6 @@ app.post("/urls/:shortURL/edit", (req, res) => {
   }
   res.redirect('/urls');
 });
-
 
 app.post("/login", (req, res) => {
   const pwClient = req.body['password'];
@@ -161,12 +153,10 @@ app.post("/login", (req, res) => {
   }
 });
 
-
 app.post("/logout", (req, res) => {
   req.session = null;
   res.status(200).redirect('/urls');
 });
-
 
 app.post("/register", (req, res) => {
   const test = req.body.emailAddress;
