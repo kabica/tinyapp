@@ -46,7 +46,6 @@ app.get("/urls/new", (req, res) => {
   const userID = req.session.user_id;
 
   if (userID) {
-    console.log(userID)
     const user = users[userID];
     const templateVars = { user };
     res.render("urls_new", templateVars);
