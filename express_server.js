@@ -63,7 +63,7 @@ app.get("/urls", (req, res) => {
     urls: myURL
   };
   // If user is not logged in, redirect to login page 
-  if(!userID) {
+  if(!user) {
     res.redirect('/login');
   } else {
     res.render("urls_index", templateVars);
